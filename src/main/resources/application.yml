@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        greetingProducer-out-0:
+          group: ${CONSUMER_GROUP_NAME:dummy-group}
+          destination: image-topic
+          content-type: image/png # content-type of the message
+      kafka:
+        binder:
+          auto-create-topics: true
+          min-partition-count: 3
+          brokers: ${KAFKA_BROKERS:localhost:9092} # broker address, you can put multiple and separate them with a coma
+          producer-properties:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+            value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+
+
